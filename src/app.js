@@ -15,6 +15,7 @@ import bcrypt from 'bcrypt';
 import indexRouter from './routes/index';
 import User from './models/user';
 import customMdw from './middleware/custom';
+import mercadopago from 'mercadopago';
 
 
 //Config Mongoose
@@ -117,6 +118,12 @@ function(accessToken, refreshToken, profile, done) {
   });
 }
 ));
+
+//configure mercado pago
+mercadopago.configure({
+  sandbox: true,
+  access_token:  process.env.ACCESS_TOKEN
+});
 
 
 //we connect all third party middleware

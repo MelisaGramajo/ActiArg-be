@@ -6,6 +6,8 @@ import AuthController from '../controllers/auth';
 import GymController from '../controllers/gym';
 import ActivityController from '../controllers/activity';
 import TurnController from '../controllers/turn';
+import PaymentController from '../controllers/payment';
+import MailController from '../controllers/sendMail';
 import passport from 'passport';
 
 /* GET home page. */
@@ -42,5 +44,11 @@ router.get('/Turns',AuthMdw.ensureAuthenticated, TurnController.search);
 router.get('/TurnbyId/:id',AuthMdw.ensureAuthenticated, GymController.searchById);
 router.put('/reserveTurn/:id',AuthMdw.ensureAuthenticated, TurnController.reserve);
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
+
+//Mercado Pago
+router.get('/mercadoPago',AuthMdw.ensureAuthenticated, PaymentController.payment);
+
+//Send Mail
+router.get('/send', MailController.send);
 
 export default router;
