@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "start": "npm run server",
-    "server": "node ./src/bin/www",
+    "server": "babel-node ./src/bin/www",
     "dev": "SET NODE_ENV=development npm run watch ./src/bin/www",
     "prod": "npm run build && SET NODE_ENV=production node ./dist/bin/www",
     "build": "npm run clean && babel ./src --config-file ./.babelrc --out-dir dist",
