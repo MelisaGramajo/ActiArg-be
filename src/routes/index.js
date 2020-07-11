@@ -26,15 +26,19 @@ router.get('/protected', AuthMdw.ensureAuthenticated, SampleController.protected
 //Gym
 router.post('/addGym',AuthMdw.ensureAuthenticated, GymController.add);
 router.put('/addActivitytoGym/:id',AuthMdw.ensureAuthenticated, GymController.addActivity);
-router.get('/Gyms',AuthMdw.ensureAuthenticated, GymController.search);
-router.get('/GymbyId/:id',AuthMdw.ensureAuthenticated, GymController.searchById);
-router.get('/ActivityByGym/:id',AuthMdw.ensureAuthenticated, GymController.searchActivityByGym);
+router.get('/GymsAdmin',AuthMdw.ensureAuthenticated, GymController.search);
+router.get('/Gyms', GymController.search);
+router.get('/GymbyId/:id', GymController.searchById);
+router.get('/GymbyIdAdmin/:id',AuthMdw.ensureAuthenticated, GymController.searchById);
+router.get('/ActivityByGymAdmin/:id',AuthMdw.ensureAuthenticated, GymController.searchActivityByGym);
+router.get('/ActivityByGym/:id', GymController.searchActivityByGym);
 router.put('/updateGym/:id',AuthMdw.ensureAuthenticated, GymController.update);
 router.put('/deleteGym/:id',AuthMdw.ensureAuthenticated, GymController.delete);
 
 //Activity
 router.post('/addActivity',AuthMdw.ensureAuthenticated, ActivityController.add);
-router.get('/Activitys',AuthMdw.ensureAuthenticated, ActivityController.search);
+router.get('/Activitys', ActivityController.search);
+router.get('/ActivitysAdmin',AuthMdw.ensureAuthenticated, ActivityController.search);
 router.put('/updateActivity/:id',AuthMdw.ensureAuthenticated, ActivityController.update);
 router.put('/deleteActivity/:id',AuthMdw.ensureAuthenticated, ActivityController.delete);
 
