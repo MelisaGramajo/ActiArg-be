@@ -50,7 +50,7 @@ router.put('/reserveTurn/:id',AuthMdw.ensureAuthenticated, TurnController.reserv
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
 
 //Mercado Pago
-router.post('/mercadoPago',AuthMdw.ensureAuthenticated, PaymentController.payment);
+router.get('/mercadoPago',AuthMdw.ensureAuthenticated, PaymentController.payment);
 
 //Send Mail
 router.get('/send', MailController.send);
