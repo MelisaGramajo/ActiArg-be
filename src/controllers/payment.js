@@ -8,7 +8,7 @@ const controller = {
                 {
                     title: req.query.titulo,
                     unit_price: req.query.precio_unitario,
-                    quantity: req.query.cantidad,
+                    quantity: 1,
                 }
             ]
         };
