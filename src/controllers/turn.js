@@ -28,8 +28,9 @@ const controller = {
     },
     searchById: async(req, res, next) => {
         try{
-            const turn = await Turn.find({_id:req.params.id, days: req.params.id_day})
+            const turn = await Turn.find({_id:req.params.id, days: req.params.idDay})
             .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn'] }]);
+            console.log("turn:::", turn);
             if(turn.active === false){
                 throw new error_types.InfoError(
                     "Turn not found"
