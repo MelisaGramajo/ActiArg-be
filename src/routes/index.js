@@ -46,7 +46,7 @@ router.put('/deleteActivity/:id',AuthMdw.ensureAuthenticated, ActivityController
 //Turn
 router.post('/addTurn',AuthMdw.ensureAuthenticated, TurnController.add);
 router.get('/Turns',AuthMdw.ensureAuthenticated, TurnController.search);
-router.get('/TurnbyId/:id/day/:id_day',AuthMdw.ensureAuthenticated, GymController.searchById);
+router.get('/TurnbyId/:id/day/:idDay',AuthMdw.ensureAuthenticated, GymController.searchById);
 router.put('/reserveTurn/:id',AuthMdw.ensureAuthenticated, TurnController.reserve);
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
 
