@@ -1,22 +1,13 @@
 import mongoose from 'mongoose';
 
 const turnSchema = mongoose.Schema({
-    activity: {
-        type: mongoose.Schema.ObjectId, ref: "activity"
+    workoutTime: {
+        type: String
     },
-    date: {
-        type: Date
-    },
-    users: [{
+    days: [{
         type: mongoose.Schema.ObjectId,
-        ref: "user",
+        ref: "day",
       }],
-    capaciteTotal: {
-        type: Number
-    },
-    capacitePartial: {
-        type: Number
-    },
     active: {
         type: Boolean,
         default: true

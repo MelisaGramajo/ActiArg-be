@@ -53,7 +53,7 @@ const controller = {
           process.env.JWT_SECRET,
           { algorithm: process.env.JWT_ALGORITHM }
         );
-        res.redirect(process.env.SERVER_FE+"/success-login/?token="+token);;
+         res.json({ data: { token: "Bearer "+token } });
       }
     })(req, res);
   },
@@ -72,7 +72,7 @@ const controller = {
           process.env.JWT_SECRET,
           { algorithm: process.env.JWT_ALGORITHM }
         );
-        res.redirect(process.env.SERVER_FE+"/success-login/?token="+token);
+        res.json({ data: { token: "Bearer "+token } });
       }
     })(req, res);
   }

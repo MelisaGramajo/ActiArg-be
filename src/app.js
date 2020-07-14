@@ -121,7 +121,6 @@ function(accessToken, refreshToken, profile, done) {
 
 //configure mercado pago
 mercadopago.configure({
-  sandbox: true,
   access_token:  process.env.ACCESS_TOKEN
 });
 

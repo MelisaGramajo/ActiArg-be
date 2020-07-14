@@ -1,15 +1,14 @@
 import Turn from '../models/turn';
+import Day from '../models/day';
 import error_types from "./error_types";
+import mercadopago from 'mercadopago';
 
 const controller = {
     add: async(req, res, next) => {
        try{
         const newTurn = new Turn({
-            activity : req.body.activity,
-            users: req.body.users,
-            date : req.body.date,
-            capaciteTotal : req.body.capaciteTotal,
-            capacitePartial: 0
+            workoutTime : req.body.workoutTime,
+            days: req.body.days
         });
         const turn = await newTurn.save();
         res.json({ data: turn});
@@ -20,7 +19,8 @@ const controller = {
     },
     search: async(req, res, next) => {
         try{
-            const turns = await Turn.find({ active:true });
+         const turns = await Turn.find({ active:true })
+         .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn'] }]);
             res.send(turns);
         } catch (err) {
             next(err);
@@ -28,7 +28,8 @@ const controller = {
     },
     searchById: async(req, res, next) => {
         try{
-            const turn = await Turn.findById(req.params.id);
+            const turn = await Turn.find({_id:req.params.id, days: req.params.id_day})
+            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn'] }]);
             if(turn.active === false){
                 throw new error_types.InfoError(
                     "Turn not found"
@@ -44,16 +45,33 @@ const controller = {
     },
     reserve: async (req, res, next) => {
         try {
-            const turn = await Turn.findOne({ _id: req.params.id });
-            if(turn.capacitePartial >= turn.capaciteTotal){
+            const day= await Day.find({_id:id_day});
+            if(day.PartialPlaces >= day.TotallPlaces){
                 throw new error_types.InfoError(
                     "No hay cupo disponible para el turno"
                   );
                 }else{
-                        turn.capacitePartial= capaciteTotal+1;
-                        turn.users.push(req.body.user);
-                  }
-            res.send(turn);
+                    let preference = {
+                        items: [
+                            {
+                                title: day.nameClass,
+                                unit_price: 200.00,
+                                quantity: 1,
+                                
+                            }
+                        ]
+                    };
+                
+                    mercadopago.preferences.create(preference)
+                        .then(function (response) {
+                            days.PartialPlaces= days.PartialPlaces+1;
+                            // Este valor reemplazará el string "$$init_point$$" en tu HTML
+                            res.send({message: "Se realizó la reserva de manera exitosa"});
+                        }).catch(function (err) {
+                            next(err);
+                        });
+                }
+            
         } catch (err) {
             next(err);
         }

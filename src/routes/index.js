@@ -6,13 +6,14 @@ import AuthController from '../controllers/auth';
 import GymController from '../controllers/gym';
 import ActivityController from '../controllers/activity';
 import TurnController from '../controllers/turn';
+import DayController from '../controllers/day';
 import PaymentController from '../controllers/payment';
 import MailController from '../controllers/sendMail';
 import passport from 'passport';
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Servidor funcionando correctamente" });
 });
 
 //Login
@@ -55,4 +56,7 @@ router.get('/mercadoPago',AuthMdw.ensureAuthenticated, PaymentController.payment
 //Send Mail
 router.get('/send', MailController.send);
 
+//Day
+router.post('/addDay',AuthMdw.ensureAuthenticated, DayController.add);
+router.get('/Days', DayController.search);
 export default router;
