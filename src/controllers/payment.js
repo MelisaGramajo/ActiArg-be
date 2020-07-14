@@ -8,13 +8,15 @@ const controller = {
                 {
                     title: req.query.titulo,
                     unit_price: req.query.precio_unitario,
-                    quantity: req.query.cantidad,
+                    quantity: 1,
+                    
                 }
             ]
         };
     
         mercadopago.preferences.create(preference)
             .then(function (response) {
+                // Este valor reemplazará el string "$$init_point$$" en tu HTML
                 res.json({ response});
             }).catch(function (err) {
                 next(err);
