@@ -20,7 +20,7 @@ const controller = {
     search: async(req, res, next) => {
         try{
          const turns = await Turn.find({ active:true })
-         .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn'] }]);
+         .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
             res.send(turns);
         } catch (err) {
             next(err);
@@ -28,17 +28,8 @@ const controller = {
     },
     searchById: async(req, res, next) => {
         try{
-            const turn = await Turn.find({_id:req.params.id, days: req.params.idDay})
-            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn'] }]);
-            console.log("turn:::", turn);
-            if(turn.active === false){
-                throw new error_types.InfoError(
-                    "Turn not found"
-                  );
-            }else{
-                res.send(turn);
-            }
-           
+            const day= await Day.find({_id:req.params.idDay});
+                res.send(day);
         } catch (err) {
             next(err);
           }
@@ -46,31 +37,33 @@ const controller = {
     },
     reserve: async (req, res, next) => {
         try {
-            const day= await Day.find({_id:id_day});
+            const day= await Day.findById(req.params.idDay);
             if(day.PartialPlaces >= day.TotallPlaces){
                 throw new error_types.InfoError(
                     "No hay cupo disponible para el turno"
                   );
                 }else{
+                    day.PartialPlaces= day.PartialPlaces+1;
+                    day.save();
                     let preference = {
                         items: [
                             {
-                                title: day.nameClass,
+                                title: req.query.title,
                                 unit_price: 200.00,
                                 quantity: 1,
                                 
                             }
-                        ]
+                        ],
+                       // auto_return: "approved"
                     };
-                
+                    console.log("preference", preference);
                     mercadopago.preferences.create(preference)
                         .then(function (response) {
-                            days.PartialPlaces= days.PartialPlaces+1;
                             // Este valor reemplazará el string "$$init_point$$" en tu HTML
-                            res.send({message: "Se realizó la reserva de manera exitosa"});
+                            res.send({ init_point: response.body.init_point });
                         }).catch(function (err) {
                             next(err);
-                        });
+                        });        
                 }
             
         } catch (err) {

@@ -10,11 +10,14 @@ const daySchema = mongoose.Schema({
     HourClass: {
         type: String
     },
-    PartialPlaces: {
+    PriceClass: {
         type: String
     },
+    PartialPlaces: {
+        type: Number
+    },
     TotallPlaces: {
-        type: String
+        type: Number
     },
     Action: {
         type: String

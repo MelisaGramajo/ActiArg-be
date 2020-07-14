@@ -7,6 +7,7 @@ const controller = {
             day : req.body.day,
             NameClass: req.body.NameClass,
             HourClass : req.body.HourClass,
+            PriceClass : req.body.PriceClass,
             PartialPlaces : req.body.PartialPlaces,
             TotallPlaces : req.body.TotallPlaces,
             Action : req.body.Action,
