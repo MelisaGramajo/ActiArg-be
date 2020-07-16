@@ -53,7 +53,9 @@ const controller = {
           process.env.JWT_SECRET,
           { algorithm: process.env.JWT_ALGORITHM }
         );
-        res.json({ data: { token: "Bearer "+token, username: user.name , userlastname: user.lastname } });
+
+         res.json({ data: { token: "Bearer "+token, username: user.name , userlastname: user.lastname, userrole: user.role } });
+
       }
     })(req, res);
   },
@@ -72,7 +74,9 @@ const controller = {
           process.env.JWT_SECRET,
           { algorithm: process.env.JWT_ALGORITHM }
         );
-        res.json({ data: { token: "Bearer "+token, username: user.name , userlastname: user.lastname } });
+
+        res.json({ data: { token: "Bearer "+token, username: user.name , userlastname: user.lastname, userrole: user.role } });
+
       }
     })(req, res);
   }
