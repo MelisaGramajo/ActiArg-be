@@ -11,7 +11,8 @@ const controller = {
             photo : req.body.photo,
             phone : req.body.phone,
             atention : req.body.atention,
-            size : req.body.size
+            size : req.body.size,
+            turns : req.body.turns
 
         });
        
