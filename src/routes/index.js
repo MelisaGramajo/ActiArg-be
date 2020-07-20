@@ -6,6 +6,7 @@ import AuthController from '../controllers/auth';
 import GymController from '../controllers/gym';
 import ActivityController from '../controllers/activity';
 import PublicitController from '../controllers/publicit';
+import CarouselController from '../controllers/carousel';
 import TurnController from '../controllers/turn';
 import DayController from '../controllers/day';
 import PaymentController from '../controllers/payment';
@@ -29,6 +30,8 @@ router.get('/protected', AuthMdw.ensureAuthenticated, SampleController.protected
 router.post('/addGym',AuthMdw.ensureAuthenticated, GymController.add);
 router.put('/addActivitytoGym/:id',AuthMdw.ensureAuthenticated, GymController.addActivity);
 router.put('/addPublicittoGym/:id',AuthMdw.ensureAuthenticated, GymController.addPublicits);
+router.put('/addTurntoGym/:id',AuthMdw.ensureAuthenticated, GymController.addTurns);
+router.put('/addCarouseltoGym/:id',AuthMdw.ensureAuthenticated, GymController.addCarousel);
 router.get('/GymsAdmin',AuthMdw.ensureAuthenticated, GymController.search);
 router.get('/Gyms', GymController.search);
 router.get('/GymbyId/:id', GymController.searchById);
@@ -36,6 +39,8 @@ router.get('/GymbyIdAdmin/:id',AuthMdw.ensureAuthenticated, GymController.search
 router.get('/ActivityByGymAdmin/:id',AuthMdw.ensureAuthenticated, GymController.searchActivityByGym);
 router.get('/ActivityByGym/:id', GymController.searchActivityByGym);
 router.get('/PublicitByGym/:id', GymController.searchPublicidadByGym);
+router.get('/CarouselByGym/:id', GymController.searchCarouselByGym);
+router.get('/TurnByGym/:id', GymController.searchTurnsByGym);
 router.put('/updateGym/:id',AuthMdw.ensureAuthenticated, GymController.update);
 router.put('/deleteGym/:id',AuthMdw.ensureAuthenticated, GymController.delete);
 
@@ -52,9 +57,15 @@ router.get('/Publicits', ActivityController.search);
 router.get('/PublicitsAdmin',AuthMdw.ensureAuthenticated, PublicitController.search);
 router.put('/updatePublicit/:id',AuthMdw.ensureAuthenticated, PublicitController.update);
 
+//Carousel
+router.post('/addCarousel',AuthMdw.ensureAuthenticated, CarouselController.add);
+router.get('/Carousels', CarouselController.search);
+router.get('/CarouselsAdmin',AuthMdw.ensureAuthenticated, CarouselController.search);
+router.put('/updateCarousel/:id',AuthMdw.ensureAuthenticated, CarouselController.update);
+
 //Turn
 router.post('/addTurn',AuthMdw.ensureAuthenticated, TurnController.add);
-router.get('/Turns/:idGym',AuthMdw.ensureAuthenticated, TurnController.search);
+router.get('/Turns',AuthMdw.ensureAuthenticated, TurnController.search);
 router.get('/TurnbyId/:idDay',AuthMdw.ensureAuthenticated, TurnController.searchById);
 router.post('/reserveTurn/:idDay',AuthMdw.ensureAuthenticated, TurnController.reserve);
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
