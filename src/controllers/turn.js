@@ -20,6 +20,7 @@ const controller = {
     },
     search: async(req, res, next) => {
         try{
+            console.log(req.params.idGym);
          const turns = await Turn.find({ active:true, gym:req.params.idGym })
          .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
             res.send(turns);

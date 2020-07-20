@@ -5,6 +5,7 @@ import SampleController from '../controllers/sample';
 import AuthController from '../controllers/auth';
 import GymController from '../controllers/gym';
 import ActivityController from '../controllers/activity';
+import PublicitController from '../controllers/publicit';
 import TurnController from '../controllers/turn';
 import DayController from '../controllers/day';
 import PaymentController from '../controllers/payment';
@@ -27,12 +28,14 @@ router.get('/protected', AuthMdw.ensureAuthenticated, SampleController.protected
 //Gym
 router.post('/addGym',AuthMdw.ensureAuthenticated, GymController.add);
 router.put('/addActivitytoGym/:id',AuthMdw.ensureAuthenticated, GymController.addActivity);
+router.put('/addPublicittoGym/:id',AuthMdw.ensureAuthenticated, GymController.addPublicits);
 router.get('/GymsAdmin',AuthMdw.ensureAuthenticated, GymController.search);
 router.get('/Gyms', GymController.search);
 router.get('/GymbyId/:id', GymController.searchById);
 router.get('/GymbyIdAdmin/:id',AuthMdw.ensureAuthenticated, GymController.searchById);
 router.get('/ActivityByGymAdmin/:id',AuthMdw.ensureAuthenticated, GymController.searchActivityByGym);
 router.get('/ActivityByGym/:id', GymController.searchActivityByGym);
+router.get('/PublicitByGym/:id', GymController.searchPublicidadByGym);
 router.put('/updateGym/:id',AuthMdw.ensureAuthenticated, GymController.update);
 router.put('/deleteGym/:id',AuthMdw.ensureAuthenticated, GymController.delete);
 
@@ -42,6 +45,12 @@ router.get('/Activitys', ActivityController.search);
 router.get('/ActivitysAdmin',AuthMdw.ensureAuthenticated, ActivityController.search);
 router.put('/updateActivity/:id',AuthMdw.ensureAuthenticated, ActivityController.update);
 router.put('/deleteActivity/:id',AuthMdw.ensureAuthenticated, ActivityController.delete);
+
+//Publicit
+router.post('/addPublicit',AuthMdw.ensureAuthenticated, PublicitController.add);
+router.get('/Publicits', ActivityController.search);
+router.get('/PublicitsAdmin',AuthMdw.ensureAuthenticated, PublicitController.search);
+router.put('/updatePublicit/:id',AuthMdw.ensureAuthenticated, PublicitController.update);
 
 //Turn
 router.post('/addTurn',AuthMdw.ensureAuthenticated, TurnController.add);
