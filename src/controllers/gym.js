@@ -11,7 +11,11 @@ const controller = {
             photo : req.body.photo,
             phone : req.body.phone,
             atention : req.body.atention,
-            size : req.body.size
+            size : req.body.size,
+            turns : req.body.turns,
+            carousel1:req.body.carousel1,
+            carousel2:req.body.carousel2,
+            carousel3:req.body.carousel3
 
         });
        
@@ -23,6 +27,14 @@ const controller = {
       }
     },
     addActivity: async (req, res, next) => {
+        try {
+            const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.send(gym);
+        } catch (err) {
+            next(err);
+        }
+    },
+    addPublicits: async (req, res, next) => {
         try {
             const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
             res.send(gym);
@@ -51,6 +63,17 @@ const controller = {
             const gym = await Gym.findById(req.params.id)
             .populate([{ path: 'activities', select: ['name','description'] }])
             .select('activities');
+            res.send(gym);
+        } catch (err) {
+            next(err);
+          }
+            
+    },
+    searchPublicidadByGym: async(req, res, next) => {
+        try{
+            const gym = await Gym.findById(req.params.id)
+            .populate([{ path: 'publicits', select: ['img','title','description'] }])
+            .select('publicits');
             res.send(gym);
         } catch (err) {
             next(err);

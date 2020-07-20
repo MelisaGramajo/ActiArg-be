@@ -27,11 +27,27 @@ const gymSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
+    carousel1: {
+        type: String
+    },
+    carousel2: {
+        type: String
+    },
+    carousel3: {
+        type: String
+    },
     activities: [{
         type: mongoose.Schema.ObjectId,
         ref: "activity",
       }],
-   
+    turns: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "turn",
+      }],
+    publicits: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "publicit",
+      }],
     
 })
 const gym = mongoose.model('gym', gymSchema);

@@ -11,7 +11,11 @@ const turnSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true
-    }
+    },
+    gym: {
+        type: mongoose.Schema.ObjectId,
+        ref: "gym",
+      }
     
 })
 const turn = mongoose.model('turn', turnSchema);
