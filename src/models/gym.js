@@ -27,15 +27,6 @@ const gymSchema = mongoose.Schema({
         type: Boolean,
         default: true
     },
-    carousel1: {
-        type: String
-    },
-    carousel2: {
-        type: String
-    },
-    carousel3: {
-        type: String
-    },
     activities: [{
         type: mongoose.Schema.ObjectId,
         ref: "activity",
@@ -47,6 +38,10 @@ const gymSchema = mongoose.Schema({
     publicits: [{
         type: mongoose.Schema.ObjectId,
         ref: "publicit",
+      }],
+    carousels: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "carousel",
       }],
     
 })

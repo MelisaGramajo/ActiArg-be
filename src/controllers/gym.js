@@ -42,6 +42,22 @@ const controller = {
             next(err);
         }
     },
+    addTurns: async (req, res, next) => {
+        try {
+            const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.send(gym);
+        } catch (err) {
+            next(err);
+        }
+    },
+    addCarousel: async (req, res, next) => {
+        try {
+            const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.send(gym);
+        } catch (err) {
+            next(err);
+        }
+    },
     searchById: async(req, res, next) => {
         try{
             const gym = await Gym.findById(req.params.id);
@@ -74,6 +90,29 @@ const controller = {
             const gym = await Gym.findById(req.params.id)
             .populate([{ path: 'publicits', select: ['img','title','description'] }])
             .select('publicits');
+            res.send(gym);
+        } catch (err) {
+            next(err);
+          }
+            
+    },
+    searchTurnsByGym: async(req, res, next) => {
+        try{
+            const gym = await Gym.findById(req.params.id)
+            .populate([{ path: 'turns', select: ['workoutTime','days','active'] }])
+            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }])
+            .select('turns');
+            res.send(gym);
+        } catch (err) {
+            next(err);
+          }
+            
+    },
+    searchCarouselByGym: async(req, res, next) => {
+        try{
+            const gym = await Gym.findById(req.params.id)
+            .populate([{ path: 'carousels', select: ['img','isActive'] }])
+            .select('carousels');
             res.send(gym);
         } catch (err) {
             next(err);

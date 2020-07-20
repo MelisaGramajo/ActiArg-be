@@ -9,7 +9,6 @@ const controller = {
         const newTurn = new Turn({
             workoutTime : req.body.workoutTime,
             days: req.body.days,
-            gym : req.body.gym
         });
         const turn = await newTurn.save();
         res.json({ data: turn});
@@ -20,8 +19,7 @@ const controller = {
     },
     search: async(req, res, next) => {
         try{ 
-            console.log(req.params.idGym);
-         const turns = await Turn.find({ active:true, gym:req.params.idGym })
+         const turns = await Turn.find({ active:true})
          .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
             res.send(turns);
         } catch (err) {
