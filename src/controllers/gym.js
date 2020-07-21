@@ -1,4 +1,5 @@
 import Gym from '../models/gym';
+import Turn from '../models/turn';
 import error_types from "./error_types";
 
 const controller = {
@@ -11,12 +12,7 @@ const controller = {
             photo : req.body.photo,
             phone : req.body.phone,
             atention : req.body.atention,
-            size : req.body.size,
-            turns : req.body.turns,
-            carousel1:req.body.carousel1,
-            carousel2:req.body.carousel2,
-            carousel3:req.body.carousel3
-
+            size : req.body.size
         });
        
         const gym = await newGym.save();
@@ -98,11 +94,12 @@ const controller = {
     },
     searchTurnsByGym: async(req, res, next) => {
         try{
-            const gym = await Gym.findById(req.params.id)
-            .populate([{ path: 'turns', select: ['workoutTime','days','active'] }])
-            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }])
-            .select('turns');
-            res.send(gym);
+            const arrayTurn = await Gym.findById(req.params.id).select('turns');
+            console.log("arrayTurn::::",arrayTurn.turns);
+            const turns = await Turn.find({ _id:arrayTurn.turns,active:true})
+            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
+            console.log("turnoss:::", turns);
+            res.send(turns);
         } catch (err) {
             next(err);
           }
