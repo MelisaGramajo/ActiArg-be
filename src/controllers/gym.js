@@ -5,6 +5,7 @@ import error_types from "./error_types";
 const controller = {
     add: async(req, res, next) => {
        try{
+           console.log("request::",req.body);
         const newGym = new Gym({
             name : req.body.name,
             description: req.body.description,
