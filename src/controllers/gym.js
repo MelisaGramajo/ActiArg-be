@@ -74,7 +74,7 @@ const controller = {
     searchActivityByGym: async(req, res, next) => {
         try{
             const gym = await Gym.findById(req.params.id)
-            .populate([{ path: 'activities', select: ['name','description'] }])
+            .populate([{ path: 'activities', select: ['name','description', 'price'] }])
             .select('activities');
             res.send(gym);
         } catch (err) {
