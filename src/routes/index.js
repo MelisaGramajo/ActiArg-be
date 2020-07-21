@@ -40,7 +40,7 @@ router.get('/ActivityByGymAdmin/:id',AuthMdw.ensureAuthenticated, GymController.
 router.get('/ActivityByGym/:id', GymController.searchActivityByGym);
 router.get('/PublicitByGym/:id', GymController.searchPublicidadByGym);
 router.get('/CarouselByGym/:id', GymController.searchCarouselByGym);
-router.get('/TurnByGym/:id', GymController.searchTurnsByGym);
+router.get('/TurnByGym/:id',AuthMdw.ensureAuthenticated, GymController.searchTurnsByGym);
 router.put('/updateGym/:id',AuthMdw.ensureAuthenticated, GymController.update);
 router.put('/deleteGym/:id',AuthMdw.ensureAuthenticated, GymController.delete);
 
