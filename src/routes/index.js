@@ -67,7 +67,7 @@ router.put('/updateCarousel/:id',AuthMdw.ensureAuthenticated, CarouselController
 router.post('/addTurn',AuthMdw.ensureAuthenticated, TurnController.add);
 router.get('/Turns',AuthMdw.ensureAuthenticated, TurnController.search);
 router.get('/TurnbyId/:idDay',AuthMdw.ensureAuthenticated, TurnController.searchById);
-router.post('/reserveTurn/:idDay',AuthMdw.ensureAuthenticated, TurnController.reserve);
+router.post('/reserveTurn/:idDay', TurnController.reserve);
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
 
 //Mercado Pago
