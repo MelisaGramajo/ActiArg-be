@@ -5,6 +5,7 @@ import error_types from "./error_types";
 const controller = {
     add: async(req, res, next) => {
        try{
+           console.log("request::",req.body);
         const newGym = new Gym({
             name : req.body.name,
             description: req.body.description,
@@ -73,7 +74,7 @@ const controller = {
     searchActivityByGym: async(req, res, next) => {
         try{
             const gym = await Gym.findById(req.params.id)
-            .populate([{ path: 'activities', select: ['name','description'] }])
+            .populate([{ path: 'activities', select: ['name','description', 'price'] }])
             .select('activities');
             res.send(gym);
         } catch (err) {
