@@ -54,7 +54,10 @@ const controller = {
                                 
                             }
                         ],
-                       // auto_return: "approved"
+                        back_urls: {
+                            success: "https://actiar.herokuapp.com/GymProfile/"+req.params.idGym,
+                        },
+                        auto_return: "approved",
                     };
                     console.log("preference", preference);
                     mercadopago.preferences.create(preference)
