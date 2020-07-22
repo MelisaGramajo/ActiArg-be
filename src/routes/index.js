@@ -40,7 +40,7 @@ router.get('/ActivityByGymAdmin/:id',AuthMdw.ensureAuthenticated, GymController.
 router.get('/ActivityByGym/:id', GymController.searchActivityByGym);
 router.get('/PublicitByGym/:id', GymController.searchPublicidadByGym);
 router.get('/CarouselByGym/:id', GymController.searchCarouselByGym);
-router.get('/TurnByGym/:id',AuthMdw.ensureAuthenticated, GymController.searchTurnsByGym);
+router.get('/TurnByGym/:id', GymController.searchTurnsByGym);
 router.put('/updateGym/:id',AuthMdw.ensureAuthenticated, GymController.update);
 router.put('/deleteGym/:id',AuthMdw.ensureAuthenticated, GymController.delete);
 
@@ -66,8 +66,8 @@ router.put('/updateCarousel/:id',AuthMdw.ensureAuthenticated, CarouselController
 //Turn
 router.post('/addTurn',AuthMdw.ensureAuthenticated, TurnController.add);
 router.get('/Turns',AuthMdw.ensureAuthenticated, TurnController.search);
-router.get('/TurnbyId/:idDay',AuthMdw.ensureAuthenticated, TurnController.searchById);
-router.post('/reserveTurn/:idDay',AuthMdw.ensureAuthenticated, TurnController.reserve);
+router.get('/TurnbyId/:idDay/gym/:idGym',AuthMdw.ensureAuthenticated, TurnController.searchById);
+router.post('/reserveTurn/:idDay/gym/:idGym', TurnController.reserve);
 router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete);
 
 //Mercado Pago
