@@ -74,7 +74,7 @@ router.put('/deleteTurn/:id',AuthMdw.ensureAuthenticated, TurnController.delete)
 router.get('/mercadoPago',AuthMdw.ensureAuthenticated, PaymentController.payment);
 
 //Send Mail
-router.get('/send', MailController.send);
+router.post('/send', MailController.send);
 
 //Day
 router.post('/addDay',AuthMdw.ensureAuthenticated, DayController.add);
