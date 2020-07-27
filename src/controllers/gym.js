@@ -137,7 +137,7 @@ const controller = {
             const gym = await Gym.findOne({ _id: req.params.id });
             gym.active = false;
             gym.save();
-            res.json({ message: "Gym removed" });
+            res.json(gym);
         } catch (err) {
             next(err);
         }
