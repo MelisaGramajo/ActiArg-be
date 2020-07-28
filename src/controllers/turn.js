@@ -62,7 +62,6 @@ const controller = {
                     console.log("preference", preference);
                     mercadopago.preferences.create(preference)
                         .then(function (response) {
-                            // Este valor reemplazará el string "$$init_point$$" en tu HTML
                             res.send({ init_point: response.body.init_point });
                         }).catch(function (err) {
                             next(err);
