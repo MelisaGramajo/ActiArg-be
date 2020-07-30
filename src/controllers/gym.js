@@ -99,7 +99,6 @@ const controller = {
             console.log("arrayTurn::::",arrayTurn.turns);
             const turns = await Turn.find({ _id:arrayTurn.turns,active:true})
             .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
-            console.log("turnoss:::", turns);
             res.send(turns);
         } catch (err) {
             next(err);
