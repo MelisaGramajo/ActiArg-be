@@ -13,14 +13,13 @@ const controller = {
       }else{
         const user = await User.findOne({ email: req.body.email });
         if (user) {
-          //if the user exists
           throw new error_types.InfoError("El usuario ya existe");
         } else {
-          //if the user does not exist it is created / registered
+          if(req.body.email.length > 30 || req.body.password.length > 30 ){
+            throw new error_types.InfoError("No se puede ingresar mas de 30 caracteres");
+          }else{
           if (req.body.password.length < 8) {
-            throw new error_types.InfoError(
-              "La contraseña debe tener al menos 8 caracteres"
-            );
+            throw new error_types.InfoError("La contraseña debe tener al menos 8 caracteres");
           } else {
             var hash = bcrypt.hashSync(
               req.body.password,
@@ -35,7 +34,7 @@ const controller = {
             newUser.dni = req.body.dni;
             await newUser.save();
           }
-        }
+        }}
       }
       res.json({ message: "User registered" });
     } catch (err) {
