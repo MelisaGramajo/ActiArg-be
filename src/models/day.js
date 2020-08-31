@@ -24,7 +24,11 @@ const daySchema = mongoose.Schema({
     },
     NameBtn: {
         type: String
-    }
+    },
+    users: [{
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+      }]
    
     
 })

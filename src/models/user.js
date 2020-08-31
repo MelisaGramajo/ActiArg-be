@@ -6,8 +6,19 @@ let validRoles={
   message: '{VALUE} no es un rol vàlido'
 };
 
+let validateEmail = function(email) {
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
+
 const userSchema = mongoose.Schema({
-  email: { type: String },
+  email: { 
+    type: String,
+    lowercase: true,
+    trim: true,
+    validate: [validateEmail, 'Ingresar un email válido'],
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Ingresar un email válido']
+  },
   password: { type: String },
   name: { type: String },
   lastname: { type: String },

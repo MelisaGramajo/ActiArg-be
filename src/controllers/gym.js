@@ -1,4 +1,5 @@
 import Gym from '../models/gym';
+import Turn from '../models/turn';
 import error_types from "./error_types";
 
 const controller = {
@@ -11,12 +12,7 @@ const controller = {
             photo : req.body.photo,
             phone : req.body.phone,
             atention : req.body.atention,
-            size : req.body.size,
-            turns : req.body.turns,
-            carousel1:req.body.carousel1,
-            carousel2:req.body.carousel2,
-            carousel3:req.body.carousel3
-
+            size : req.body.size
         });
        
         const gym = await newGym.save();
@@ -35,6 +31,22 @@ const controller = {
         }
     },
     addPublicits: async (req, res, next) => {
+        try {
+            const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.send(gym);
+        } catch (err) {
+            next(err);
+        }
+    },
+    addTurns: async (req, res, next) => {
+        try {
+            const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.send(gym);
+        } catch (err) {
+            next(err);
+        }
+    },
+    addCarousel: async (req, res, next) => {
         try {
             const gym = await Gym.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
             res.send(gym);
@@ -80,6 +92,29 @@ const controller = {
           }
             
     },
+    searchTurnsByGym: async(req, res, next) => {
+        try{
+            const arrayTurn = await Gym.findById(req.params.id).select('turns');
+            console.log("arrayTurn::::",arrayTurn.turns);
+            const turns = await Turn.find({ _id:arrayTurn.turns,active:true})
+            .populate([{ path: 'days', select: ['day','NameClass','HourClass','PartialPlaces','TotallPlaces','Action','NameBtn','PriceClass'] }]);
+            res.send(turns);
+        } catch (err) {
+            next(err);
+          }
+            
+    },
+    searchCarouselByGym: async(req, res, next) => {
+        try{
+            const gym = await Gym.findById(req.params.id)
+            .populate([{ path: 'carousels', select: ['img','isActive'] }])
+            .select('carousels');
+            res.send(gym);
+        } catch (err) {
+            next(err);
+          }
+            
+    },
     search: async(req, res, next) => {
         try{
             const gyms = await Gym.find({ active:true });
@@ -101,7 +136,7 @@ const controller = {
             const gym = await Gym.findOne({ _id: req.params.id });
             gym.active = false;
             gym.save();
-            res.json({ message: "Gym removed" });
+            res.json(gym); 
         } catch (err) {
             next(err);
         }
