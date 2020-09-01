@@ -12,13 +12,7 @@ let validateEmail = function(email) {
 };
 
 const userSchema = mongoose.Schema({
-  email: { 
-    type: String,
-    lowercase: true,
-    trim: true,
-    validate: [validateEmail, 'Ingresar un email válido'],
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Ingresar un email válido']
-  },
+  email: { type: String},
   password: { type: String },
   name: { type: String },
   lastname: { type: String },
