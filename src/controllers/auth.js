@@ -4,6 +4,10 @@ import passport from "passport";
 import jwt from "jsonwebtoken";
 import error_types from "./error_types";
 
+let validateEmail = function(email) {
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+};
 
 const controller = {
   register: async (req, res, next) => {
@@ -15,24 +19,29 @@ const controller = {
         if (user) {
           throw new error_types.InfoError("El usuario ya existe");
         } else {
-          if(req.body.email.length > 30 || req.body.password.length > 30 ){
-            throw new error_types.InfoError("No se puede ingresar mas de 30 caracteres");
+          const test= validateEmail(req.body.email);
+          if(test===false){
+            throw new error_types.InfoError("Email inválido. Revise formato");
           }else{
-          if (req.body.password.length < 8) {
-            throw new error_types.InfoError("La contraseña debe tener al menos 8 caracteres");
-          } else {
-            var hash = bcrypt.hashSync(
-              req.body.password,
-              parseInt(process.env.BCRYPT_ROUNDS)
-            );
-            let newUser = new User();
-            newUser.email = req.body.email;
-            newUser.password = hash;
-            newUser.name = req.body.name;
-            newUser.lastname = req.body.lastname;
-            newUser.phone= req.body.phone;
-            newUser.dni = req.body.dni;
-            await newUser.save();
+            if(req.body.email.length > 30 || req.body.password.length > 30 ){
+              throw new error_types.InfoError("No se puede ingresar mas de 30 caracteres");
+            }else{
+            if (req.body.password.length < 8) {
+              throw new error_types.InfoError("La contraseña debe tener al menos 8 caracteres");
+            } else {
+              var hash = bcrypt.hashSync(
+                req.body.password,
+                parseInt(process.env.BCRYPT_ROUNDS)
+              );
+              let newUser = new User();
+              newUser.email = req.body.email;
+              newUser.password = hash;
+              newUser.name = req.body.name;
+              newUser.lastname = req.body.lastname;
+              newUser.phone= req.body.phone;
+              newUser.dni = req.body.dni;
+              await newUser.save();
+            }
           }
         }}
       }
